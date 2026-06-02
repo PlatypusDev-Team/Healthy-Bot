@@ -3,10 +3,13 @@ import os
 import time
 import threading
 import telebot
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-# Importa as funções do fluxo 
-from formulario import (
+# Importa as funções de audio
+from audio import transcrever_audio
+
+# Importa as funções do consulta_vacinal
+from cunsulta_vacinal import (
     iniciar_conversa,
     consulta_vacinal,
     processar_gestante,
@@ -37,8 +40,10 @@ import scraping.scraper_pdf as scraper_pdf
 import scraping.scraper_vacinas as scraper_vacinas
 
 # Carrega o token do .env
-load_dotenv()
-TOKEN = os.getenv('TELEGRAM_TOKEN')
+#load_dotenv()
+#TOKEN = os.getenv('TELEGRAM_TOKEN')
+
+TOKEN = "7880133237:AAHmFbZl4j6NXlRawgidccYdiH-Ia-UYgOA"
 
 if not TOKEN or not TOKEN.strip():
     print("❌ Erro: TELEGRAM_TOKEN não configurado no .env")
@@ -91,6 +96,28 @@ def receber_localizacao_gps(message):
     lon = message.location.longitude
     processar_e_responder_postos(message.chat.id, lat, lon, "sua localização atual")
 
+@bot.message_handler(content_types=['voice'])
+def receber_audio(message):
+
+    texto = transcrever_audio(bot, message)
+
+    if not texto:
+        bot.send_message(
+            message.chat.id,
+            "❌ Não consegui entender o áudio."
+        )
+        return
+
+    class MensagemFake:
+        pass
+
+    msg_fake = MensagemFake()
+    msg_fake.chat = message.chat
+    msg_fake.from_user = message.from_user
+    msg_fake.text = texto
+
+    tratar_mensagens(msg_fake)
+    
 @bot.message_handler(func=lambda msg: True)
 def tratar_mensagens(msg):
     if not msg.text:
@@ -212,7 +239,7 @@ def cb_mais_info(call):
         try:
             scraper_pdf.enviar_paginas_como_foto(bot, uid, faixa)
             bot.delete_message(uid, msg_espera.message_id)
-            bot.send_message(uid, "✅ Calendário enviado! Se precisar de algo mais, digite 'Oi' 💙")
+            bot.send_message(uid, "✅ Calendário enviado! Se precisar de algo mais, só pedir")
             remover_usuario(uid)
         except Exception as e:
             print(f"Erro PDF: {e}")

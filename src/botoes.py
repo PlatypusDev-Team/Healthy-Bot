@@ -46,14 +46,6 @@ def vacinacao_domiciliar():
     teclado.add(InlineKeyboardButton("Atendimento domiciliar", callback_data="vacinacao_domiciliar"))
     return teclado
 
-def menu_inicial():
-    teclado = InlineKeyboardMarkup()
-    teclado.row(
-        InlineKeyboardButton("ℹ️ Saiba Mais", callback_data="saiba_mais"),
-        InlineKeyboardButton("🏠Atendimento domiciliar", callback_data="vacinacao_domiciliar")
-    )
-    return teclado
-
 def grupos_especiais():
     teclado = InlineKeyboardMarkup(row_width=2)
 
