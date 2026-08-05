@@ -6,7 +6,7 @@ from urllib.parse import quote
 
 usuarios_localizacao = set()
 
-def mensagem_loc(chat_id):
+def mensagem_loc(bot, chat_id):
     texto = (
         "👋 Olá! Seja bem-vindo ao buscador de Postos de Saúde.\n\n"
         "Aqui você pode descobrir o posto mais próximo de você de duas formas:\n"

@@ -1,5 +1,5 @@
 import threading                   # Para rodar tarefas pesadas sem travar o bot
-import botoes_formulario           # Arquivo com os botões que aparecem no Telegram
+import botoes as botoes           # Arquivo com os botões que aparecem no Telegram
 import scraping.scraper_vacinas as vacinas_scraper  # Busca informações das vacinas no site
 
 # Um "armário" para guardar os dados de cada usuário enquanto ele usa o bot
@@ -125,21 +125,21 @@ def consulta_vacinal(bot, message):
         bot.send_message(
             user_id,
             f"📌 Legal, {nome}! Para quem é a consulta?",
-            reply_markup=botoes_formulario.tipo_pessoa()
+            reply_markup=botoes.tipo_pessoa()
         )
         return
 
     # Etapa: perguntou se é pra si ou outra pessoa
     if etapa == 'tipo_pessoa':
-        bot.send_message(user_id, "👆 Use os botões para responder.", reply_markup=botoes_formulario.tipo_pessoa())
+        bot.send_message(user_id, "👆 Use os botões para responder.", reply_markup=botoes.tipo_pessoa())
 
     # Etapa: perguntou se é bebê
     elif etapa == 'bebe_check':
-        bot.send_message(user_id, "👆 Use os botões para responder.", reply_markup=botoes_formulario.bebe())
+        bot.send_message(user_id, "👆 Use os botões para responder.", reply_markup=botoes.bebe())
 
     # Etapa: perguntou se é gestante
     elif etapa == 'gestante':
-        bot.send_message(user_id, "👆 Use os botões para responder.", reply_markup=botoes_formulario.gestante())
+        bot.send_message(user_id, "👆 Use os botões para responder.", reply_markup=botoes.gestante())
 
     # Etapa: pediu a idade em anos
     elif etapa == 'idade':
@@ -170,7 +170,7 @@ def consulta_vacinal(bot, message):
                 # Marca a etapa como gestante para que o clique no botão seja tratado
                 atualizar_usuario(user_id, {'etapa': 'gestante'})
                 bot.send_message(user_id, "📌 A pessoa está gestante ou planejando gestação?",
-                    reply_markup=botoes_formulario.gestante())
+                    reply_markup=botoes.gestante())
             else:
                 # Menos de 12 anos (mas > 2): segue fluxo normal por faixa
                 faixa = determinar_faixa_etaria(idade)
@@ -204,7 +204,7 @@ def processar_tipo_pessoa(bot, call):
         bot.send_message(uid, "Certo! Me diga a sua idade (em anos):")
     else:
         atualizar_usuario(uid, {'etapa': 'bebe_check'})
-        bot.send_message(uid, "👶 É um bebê (até 2 anos)?", reply_markup=botoes_formulario.bebe())
+        bot.send_message(uid, "👶 É um bebê (até 2 anos)?", reply_markup=botoes.bebe())
 
 
 # Função que trata cliques nos botões de "Bebe/Não Bebê"
@@ -307,7 +307,7 @@ def _enviar_vacinas_em_background(bot, user_id, faixa):
             bot.send_message(user_id,
                     "⚠️ Não consegui determinar a fase no calendário oficial.\n\n"
                     "💡 Acesse o calendário completo:",
-                    reply_markup=botoes_formulario.mais_informacoes())
+                    reply_markup=botoes.mais_informacoes())
             return
 
         # Monta a lista de vacinas
@@ -331,13 +331,13 @@ def _enviar_vacinas_em_background(bot, user_id, faixa):
                 "💡 *Deseja o Calendário Oficial completo?*"
             )
             bot.send_message(user_id, mensagem, parse_mode='Markdown',
-                    reply_markup=botoes_formulario.mais_informacoes())
+                    reply_markup=botoes.mais_informacoes())
         else:
             # Se não achou, oferece o calendário oficial
             bot.send_message(user_id,
                     "⚠️ Não encontrei vacinas específicas para esta fase.\n\n"
                     "📄 Consulte o calendário oficial completo:",
-                    reply_markup=botoes_formulario.mais_informacoes())
+                    reply_markup=botoes.mais_informacoes())
 
     except Exception as e:
         # Em caso de erro, avisa o usuário

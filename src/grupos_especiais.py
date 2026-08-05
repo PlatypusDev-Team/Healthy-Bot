@@ -1,5 +1,5 @@
 import telebot
-import botoes_formulario
+import botoes as botoes
 
 #FUNCAO DE GRUPOS ESPECIAIS
 
@@ -18,7 +18,7 @@ def iniciar_grupos_especiais(bot, user_id):
         user_id,
         texto,
         parse_mode='Markdown',
-        reply_markup=botoes_formulario.grupos_especiais()
+        reply_markup=botoes.grupos_especiais()
     )
 
 def processar_quem_recebe(bot, user_id):
@@ -42,7 +42,7 @@ def processar_quem_recebe(bot, user_id):
     bot.send_message(user_id, 
         texto, 
         parse_mode='Markdown', 
-        reply_markup=botoes_formulario.voltar_grupos_especiais()
+        reply_markup=botoes.voltar_grupos_especiais()
         )
 
 def processar_locais_vacinancao_crie(bot, user_id):
@@ -55,7 +55,7 @@ def processar_locais_vacinancao_crie(bot, user_id):
     bot.send_message(user_id, 
         texto, 
         parse_mode='Markdown', 
-        reply_markup=botoes_formulario.voltar_grupos_especiais()
+        reply_markup=botoes.voltar_grupos_especiais()
         )
 
 def processar_rie(bot, user_id):
@@ -74,7 +74,7 @@ def processar_rie(bot, user_id):
     bot.send_message(user_id, 
         texto, 
         parse_mode='Markdown', 
-        reply_markup=botoes_formulario.voltar_grupos_especiais()
+        reply_markup=botoes.voltar_grupos_especiais()
         )
 
 def processar_fonte_crie(bot, user_id):
@@ -88,7 +88,7 @@ def processar_fonte_crie(bot, user_id):
     bot.send_message(user_id, 
         texto, 
         parse_mode='Markdown', 
-        reply_markup=botoes_formulario.voltar_grupos_especiais()
+        reply_markup=botoes.voltar_grupos_especiais()
         )
 
 def processar_voltar_grupos_especiais(bot, user_id):
