@@ -54,10 +54,10 @@ bot = telebot.TeleBot(TOKEN.strip(), threaded=True, num_threads=10)
 
 # Palavras-chave que reiniciam o fluxo
 saudacoes = ['oi', 'olá', 'ola', 'bom dia', 'boa tarde', 'boa noite', 'ajuda', 'start', 'opa', 'eae', 'eai', 'dia', 'tarde', 'noite', 'fala']
-lista_consulta = ["consulta", "consuta", "consulte", "consultar", "consuntando", "agendar", "marcar", "agendando", "visitar", "verificar", "informação"]
-lista_endereço = ["endereço", "local", "região", "posto", "onde", "fica", "ponto", "rua", "bairro", "perto"]
+lista_consulta = ["vacinas", "consulta", "consuta", "consulte", "consultar", "consuntando", "agendar", "marcar", "agendando", "visitar", "verificar", "informação"]
+lista_endereço = ["consultar postos", "consultar postinhos", "postos", "postinhos", "endereço", "local", "região", "posto", "onde", "fica", "ponto", "rua", "bairro", "perto"]
 lista_domiciliar = ["domiciliar", "casa", "residência", "residencial", "home", "acamado", "locomoção", "vir", "aparamento", "apartamento", "locomover", "lomocover"]
-lista_comorbidades = ["comorbidades"]
+lista_comorbidades = ["comorbidades", "grupos", "especiais"]
 lista_saiba_mais = ["saiba mais"]
 
 def responder_callback_seguro(call):
